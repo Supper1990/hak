@@ -2,8 +2,7 @@
 
 This module provides basic arithmetic operations and a CLI interface that lets
 users perform calculations directly from the command line. Supported
-operations include addition, subtraction, multiplication, division, and
-exponentiation.
+operations include addition, subtraction, division, and exponentiation.
 
 Usage examples::
 
@@ -46,14 +45,6 @@ def subtract(numbers: Iterable[Number]) -> Number:
     return result
 
 
-def multiply(numbers: Iterable[Number]) -> Number:
-    """Return the product of the provided numbers."""
-    result = 1.0
-    for number in numbers:
-        result *= number
-    return result
-
-
 def divide(numbers: Iterable[Number]) -> Number:
     """Return the result of dividing the first number by the subsequent numbers."""
     iterator = iter(numbers)
@@ -82,8 +73,6 @@ OPERATIONS: Dict[str, Callable[[Iterable[Number]], Number]] = {
     "add": add,
     "sub": subtract,
     "subtract": subtract,
-    "mul": multiply,
-    "multiply": multiply,
     "div": divide,
     "divide": divide,
     "pow": power,
