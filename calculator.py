@@ -2,11 +2,15 @@
 
 This module provides basic arithmetic operations and a CLI interface that lets
 users perform calculations directly from the command line. Supported
-operations include addition, subtraction, division, and exponentiation.
+operations include addition, subtraction, multiplication, division,
+exponentiation, and factorial.
 
 Usage examples::
 
     $ python calculator.py add 1 2 3
+    6.0
+
+    $ python calculator.py multiply 2 3
     6.0
 
     $ python calculator.py divide 10 2
@@ -15,10 +19,14 @@ Usage examples::
     $ python calculator.py pow 2 10
     1024.0
 
+    $ python calculator.py factorial 5
+    120.0
+
 """
 from __future__ import annotations
 
 import argparse
+import math
 from typing import Callable, Dict, Iterable, List
 
 Number = float
@@ -45,6 +53,19 @@ def subtract(numbers: Iterable[Number]) -> Number:
     return result
 
 
+def multiply(numbers: Iterable[Number]) -> Number:
+    """Return the product of the provided numbers."""
+    iterator = iter(numbers)
+    try:
+        product = next(iterator)
+    except StopIteration:
+        raise ValueError("multiply operation requires at least one operand") from None
+
+    for number in iterator:
+        product *= number
+    return product
+
+
 def divide(numbers: Iterable[Number]) -> Number:
     """Return the result of dividing the first number by the subsequent numbers."""
     iterator = iter(numbers)
@@ -69,14 +90,35 @@ def power(numbers: Iterable[Number]) -> Number:
     return base ** exponent
 
 
+def factorial(numbers: Iterable[Number]) -> Number:
+    """Return the factorial of the single provided operand."""
+    numbers_list = list(numbers)
+    if len(numbers_list) != 1:
+        raise ValueError("factorial operation requires exactly one operand")
+
+    (operand,) = numbers_list
+    if not operand.is_integer():
+        raise ValueError("factorial operand must be an integer")
+
+    integer_operand = int(operand)
+    if integer_operand < 0:
+        raise ValueError("factorial is undefined for negative numbers")
+
+    return float(math.factorial(integer_operand))
+
+
 OPERATIONS: Dict[str, Callable[[Iterable[Number]], Number]] = {
     "add": add,
     "sub": subtract,
     "subtract": subtract,
+    "mul": multiply,
+    "multiply": multiply,
     "div": divide,
     "divide": divide,
     "pow": power,
     "power": power,
+    "fact": factorial,
+    "factorial": factorial,
 }
 
 
