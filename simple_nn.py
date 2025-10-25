@@ -1,4 +1,4 @@
-"""Simple feedforward neural network trained on XOR without external deps."""
+"""Простая полносвязная нейросеть, обучающаяся решению XOR без сторонних библиотек."""
 
 from __future__ import annotations
 
@@ -169,8 +169,8 @@ def main() -> None:
     network = Network(hidden=hidden_layer, output=output_layer)
     losses = train(network, inputs, targets, epochs=5000, lr=0.1)
 
-    print(f"Final loss: {losses[-1]:.6f}")
-    print("Predictions:")
+    print(f"Финальная ошибка: {losses[-1]:.6f}")
+    print("Предсказания:")
     for inp, pred in zip(inputs, network.forward(inputs)):
         print(f"{inp} -> {pred[0]:.4f}")
 
